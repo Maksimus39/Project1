@@ -1,19 +1,30 @@
-//
-//  ViewController.swift
-//  Project1
-//
-//  Created by Максим Минаков on 16.12.2025.
-//
-
 import UIKit
 
-class ViewController: UIViewController {
-
+class ViewController: UITableViewController {
+    var picture = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        let fm = FileManager.default
+        let path = Bundle.main.resourcePath!
+        let items = try! fm.contentsOfDirectory(atPath: path)
+        
+        for item in items {
+            if item.hasPrefix("nssl"){
+                picture.append(item)
+            }
+        }
+        print(picture)
     }
-
-
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        picture.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Picture", for: indexPath)
+        cell.textLabel?.text = picture[indexPath.row]
+        return cell
+    }
 }
-
