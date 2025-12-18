@@ -18,7 +18,7 @@ class ViewController: UITableViewController {
                 picture.append(item)
             }
         }
-        print(picture)
+        picture.sort()
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -34,6 +34,8 @@ class ViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let vc = storyboard?.instantiateViewController(withIdentifier: "Detail") as? DetailViewController {
             vc.selectImage = picture[indexPath.row]
+            vc.selectedPictureNumber = indexPath.row + 1
+            vc.totalPicture = picture.count
             navigationController?.pushViewController(vc, animated: true)
         }
     }
